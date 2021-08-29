@@ -36,7 +36,7 @@ public class User {
 	private Integer can_lent_product;
 	private Date pack_expiry;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "add_id")
 	private Address address;
 	
