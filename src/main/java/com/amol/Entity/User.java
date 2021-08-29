@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -35,7 +36,7 @@ public class User {
 	private Integer can_lent_product;
 	private Date pack_expiry;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	@JoinColumn(name = "add_id")
 	private Address address;
 	
