@@ -26,10 +26,24 @@ public class GenreController {
 	@Autowired
 	GenreRepository genRepo;
 	
+	//=============My-JPQL===========================
+	@GetMapping("/by-cate-id/{id}")
+	public List<Genre> getAllGenreByCategoryId(@PathVariable("id")Integer id){
+		return this.genRepo.getAllByCategryId(id);
+	}
+	
+	@GetMapping("/by-lang-id/{id}")
+	public List<Genre> getAllGenreByLanguageId(@PathVariable("id")Integer id){
+		return this.genRepo.getAllByLanguageId(id);
+	}
+	//==================END===========================
+	
+	
 	@GetMapping("/all")
 	public List<Genre> getAllGenre(){
 		return this.genRepo.findAll();
 	}
+	
 	
 	@GetMapping("/{id}")
 	public Optional<Genre> getGenreById(@PathVariable("id")Integer id) {
@@ -38,44 +52,34 @@ public class GenreController {
 	
 	
 	@PostMapping("/")
-	public String saveGenre(@RequestBody Genre genre) {
-		if(genre!=null) {
-			this.genRepo.save(genre);
-			return "GENRE SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
-	
-	@PostMapping("/all")
-	public String saveAllGenre(@RequestBody List<Genre> genre) {
-		if(genre.get(0)!=null) {
-			this.genRepo.saveAll(genre);
-			return "GENREs SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Genre saveGenre(@RequestBody Genre gen) {
+		return this.genRepo.save(gen);
 	}
 	
 	@PutMapping("/")
-	public String updateGenre(@RequestBody Genre genre) {
-		if(this.genRepo.existsById(genre.getGen_id())) {
-			this.genRepo.save(genre);
-			return "GENRE UPDATED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Genre updateGenre(@RequestBody Genre gen) {
+		return this.genRepo.save(gen);
 	}
 	
-	@DeleteMapping("/genre/{id}")
-	public String deleteGenre(@PathVariable("id")Integer id) {
-		if(this.genRepo.existsById(id)) {
-			this.genRepo.deleteById(id);
-			return "GENRE DELETED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	@DeleteMapping("/{id}")
+	public String deleteById(@PathVariable("id") Integer id) {
+		this.genRepo.deleteById(id);
+		return "DELETED";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

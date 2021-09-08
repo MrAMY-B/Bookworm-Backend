@@ -18,7 +18,7 @@ import com.amol.Entity.Account;
 import com.amol.Repository.AccountRepostory;
 
 @RestController
-//@CrossOrigin(origins ="http://localhost:4200", allowedHeaders = "*")
+//@CrossOrigin(origins ="http://localhost:3000", allowedHeaders = "*")
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 @RequestMapping("/account")
 public class AccountController {

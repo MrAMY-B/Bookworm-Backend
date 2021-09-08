@@ -37,28 +37,28 @@ public class Product {
 	
 	
 
-	//IF YOU ARE UNCOMMENTING PLEASE ADD UNCOMENTED PART TO ITS CONTROLLER SAVE DEMO
-	@ManyToOne
-	@JoinColumn(name = "cate_id")
-	private Category category;
-	
-	@ManyToOne
-	@JoinColumn(name = "lang_id")
-	private Language language;
-	
-	@ManyToOne
+//	//IF YOU ARE UNCOMMENTING PLEASE ADD UNCOMENTED PART TO ITS CONTROLLER SAVE DEMO
+//	@ManyToOne
+//	@JoinColumn(name = "cate_id")
+//	private Category category;
+//	
+//	@ManyToOne
+//	@JoinColumn(name = "lang_id")
+//	private Language language;
+//	
+	@ManyToOne	
 	@JoinColumn(name = "gen_id")
 	private Genre genre;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER )
+	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY )
 	@JoinTable(name = "prod_auth", 
 		joinColumns = @JoinColumn(name="prod_id"), 
 		inverseJoinColumns = @JoinColumn(name="auth_id")
 				)
 	private List<Author> authors=new ArrayList<>();
 
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "pub_id")
 	private Publisher publisher;
 	

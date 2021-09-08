@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amol.Entity.Language;
+import com.amol.Repository.GenreRepository;
 import com.amol.Repository.LanguageRepository;
 
 @RestController
@@ -23,71 +24,68 @@ import com.amol.Repository.LanguageRepository;
 @RequestMapping("/language")
 public class LanguageController {
 	
-		@Autowired
-		LanguageRepository langRepo;
-		
-		@GetMapping("/all")
-		public List<Language> getAllLanguage(){
-			return this.langRepo.findAll();
-		}
-		
-		@GetMapping("/{id}")
-		public Optional<Language> getLanguageById(@PathVariable("id")Integer id) {
-			return this.langRepo.findById(id);
-		}
-		
-		
-		@PostMapping("/")
-		public String saveLanguage(@RequestBody Language language) {
-			if(language!=null) {
-				this.langRepo.save(language);
-				return "LANGUAGE SAVED SUCCESSFULLY";
-			}
-			
-			return "FAILED..!! PLEASE TRY AGAIN";
-		}
-		
-		@PostMapping("/all")
-		public String saveAllLanguage(@RequestBody List<Language> languagel) {
-			if(languagel.get(0)!=null) {
-				this.langRepo.saveAll(languagel);
-				return "LANGUAGEs SAVED SUCCESSFULLY";
-			}
-			
-			return "FAILED..!! PLEASE TRY AGAIN";
-		}
-		
-		@PutMapping("/")
-		public String updateLanguage(@RequestBody Language language) {
-			if(this.langRepo.existsById(language.getLang_id())) {
-				this.langRepo.save(language);
-				return "LANGUAGE UPDATED SUCCESSFULLY";
-			}
-			
-			return "FAILED..!! PLEASE TRY AGAIN";
-		}
-		
-		@DeleteMapping("/{id}")
-		public String deleteLanguage(@PathVariable("id")Integer id) {
-			if(this.langRepo.existsById(id)) {
-				this.langRepo.deleteById(id);
-				return "LANGUAGE DELETED SUCCESSFULLY";
-			}
-			
-			return "FAILED..!! PLEASE TRY AGAIN";
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	@Autowired
+	LanguageRepository langRepo;
+	
+	@Autowired
+	GenreRepository genRepo;
+	
+	
+	
+	//====================MY-JPQL===================
+	
+	@GetMapping("/by-cate-id/{id}")
+	public List<Language> findAllByCategoryId(@PathVariable("id") Integer id){
+		return this.langRepo.findAllByCategoryId(id);
+	}
+	
+	@GetMapping("/by-gen-id/{id}")
+	public Language getOneLanguageByGenreId(@PathVariable("id")Integer gen_id) {
+		return this.genRepo.findLanguageByGenreId(gen_id);
+	}
+	
+	
+	//====================JPQL-END===================
+	
+	@GetMapping("/all")
+	public List<Language> getAllLanguage(){
+		return this.langRepo.findAll();
+	}
+	
+	
+	@GetMapping("/{id}")
+	public Optional<Language> getLanguageById(@PathVariable("id")Integer id) {
+		return this.langRepo.findById(id);
+	}
+	
+	
+	@PostMapping("/")
+	public Language saveLanguage(@RequestBody Language lang) {
+		return this.langRepo.save(lang);
+	}
+	
+	@PutMapping("/")
+	public Language updateLanguage(@RequestBody Language lang) {
+		return this.langRepo.save(lang);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteById(@PathVariable("id") Integer id) {
+		this.langRepo.deleteById(id);
+		return "DELETED";
+	}
 	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

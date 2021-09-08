@@ -1,9 +1,15 @@
 package com.amol.Entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,15 +22,19 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Language {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer lang_id;
 	private String language;
 	
-//	@OneToMany
-//	@JoinColumn(name = "lang_id", updatable = false,insertable = false)
-//	@JsonBackReference
-//	private List<Product> product;
+
+	@ManyToOne 
+	@JoinColumn(name="cate_id")
+	private Category category;
+	
+	@OneToMany(mappedBy = "language")	
+	@JsonBackReference
+	private List<Genre> genres;
 	
 	
 	

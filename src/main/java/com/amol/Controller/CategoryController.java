@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amol.Entity.Category;
 import com.amol.Repository.CategoryRepository;
+import com.amol.Repository.GenreRepository;
+import com.amol.Repository.LanguageRepository;
 
 @RestController
 //@CrossOrigin(origins ="http://localhost:4200", allowedHeaders = "*")
@@ -26,56 +28,69 @@ public class CategoryController {
 	@Autowired
 	CategoryRepository cateRepo;
 	
+	@Autowired
+	LanguageRepository langRepo;
+	
+	@Autowired 
+	GenreRepository genRepo;
+	
+	
+	//====================MY-JPQL===================
+	
+	///----------FIND_CATEGORY_BY_LANG_ID
+	@GetMapping("/by-lang-id/{id}")
+	public Category getCategoryByLanguage(@PathVariable("id")Integer lang_id) {
+		return this.langRepo.findCategoryByLanguageId(lang_id);
+	}
+	
+	////---------FIND_CATEGORY_BY_GENRE_ID
+	@GetMapping("/by-gen-id/{id}")
+	public Category getCategoryByGenreId(@PathVariable("id")Integer gen_id) {
+		return this.genRepo.findCategoryByGenreId(gen_id);
+	}
+	
+	//====================JPQL-END===================
+	
+	
+
 	@GetMapping("/all")
 	public List<Category> getAllCategory(){
 		return this.cateRepo.findAll();
 	}
+
+
 	
 	@GetMapping("/{id}")
-	public Optional<Category> getCategoryById(@PathVariable("id")Integer id) {
+	public Optional<Category> getCategoryById(@PathVariable("id") Integer id) {
 		return this.cateRepo.findById(id);
 	}
 	
 	
 	@PostMapping("/")
-	public String saveCategory(@RequestBody Category category) {
-		if(category!=null) {
-			this.cateRepo.save(category);
-			return "CATEGORY SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Category saveCategory( @RequestBody Category cate) {
+			return this.cateRepo.save(cate);
 	}
 	
-	@PostMapping("/all")
-	public String saveAllCategory(@RequestBody List<Category> categoryl) {
-		if(categoryl.get(0)!=null) {
-			this.cateRepo.saveAll(categoryl);
-			return "CATEGORYs SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
 	
 	@PutMapping("/")
-	public String updateCategory(@RequestBody Category category) {
-		if(this.cateRepo.existsById(category.getCate_id())) {
-			this.cateRepo.save(category);
-			return "CATEGORY UPDATED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Category updateCategory( @RequestBody Category cate) {
+			return this.cateRepo.save(cate);
 	}
+	
 	
 	@DeleteMapping("/{id}")
-	public String deleteCategory(@PathVariable("id")Integer id) {
-		if(this.cateRepo.existsById(id)) {
-			this.cateRepo.deleteById(id);
-			return "CATEGORY DELETED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public String deleteCategory(@PathVariable("id") Integer id) {
+		 this.cateRepo.deleteById(id);
+		return "DELETED :"+id;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
+

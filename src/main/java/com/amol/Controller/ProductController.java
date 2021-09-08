@@ -1,9 +1,8 @@
 package com.amol.Controller;
 
-import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,12 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.amol.Entity.Author;
-import com.amol.Entity.Category;
-import com.amol.Entity.Genre;
-import com.amol.Entity.Language;
 import com.amol.Entity.Product;
-import com.amol.Entity.Publisher;
+import com.amol.Repository.AuthorRepository;
 import com.amol.Repository.ProductRepository;
 
 @RestController
@@ -30,7 +25,8 @@ import com.amol.Repository.ProductRepository;
 @RequestMapping("/product")
 public class ProductController {
 
-	
+	@Autowired
+	AuthorRepository authRepo;
 	@Autowired
 	ProductRepository prodRepo;
 	
@@ -40,6 +36,28 @@ public class ProductController {
 		return this.prodRepo.findAll();
 	}
 	
+	//==================Find Prod By Genre Id
+	@GetMapping("/by-gen-id/{id}")
+	public List<Product> findProductsByGenreId(@PathVariable("id")Integer id){
+		return this.prodRepo.findAllByGenreId(id);
+	}
+	
+	@GetMapping("/by-lang-id/{id}")
+	public List<Product> findProductsByLanguageId(@PathVariable("id")Integer id){
+		return this.prodRepo.findAllByLanguageId(id);
+	}
+	
+	@GetMapping("/by-cate-id/{id}")
+	public List<Product> findProductsByCategoryId(@PathVariable("id")Integer id){
+		return this.prodRepo.findAllByCategoryId(id);
+	}
+	
+	@GetMapping("/user/{id}")
+	public List<Product> getProdsByAuthorId(@PathVariable("id") Integer id){
+		return this.prodRepo.getAllByAuthorsAuth_id(id);
+	}
+	
+	///=======================================================
 
 	@GetMapping("/{id}")
 	public Optional<Product> getProductById(@PathVariable("id")Integer id) {
@@ -49,9 +67,24 @@ public class ProductController {
 	
 	@PostMapping("/")
 	public String saveProduct(@RequestBody Product product) {
-		if(product!=null) {
+		if(product.getAuthors()!=null) {
+			System.out.println("1");
 			
+			
+			 //SAVING AUTHOR IF ALREADY EXIST
+			 product.setAuthors(product.getAuthors().stream().map(
+					 (pro)->{
+						 if(pro.getAuth_id()!=null && pro.getAuth_id()>0)
+							 pro=authRepo.getById(pro.getAuth_id());
+						 return pro;
+					 	}
+					 ).collect(Collectors.toList()) );
+			
+			
+			
+			System.out.println("2");
 			this.prodRepo.save(product);
+			System.out.println("3");
 			return "PRODUCT SAVED SUCCESSFULLY";
 		}
 		
@@ -59,9 +92,19 @@ public class ProductController {
 	}
 	
 	@PostMapping("/all")
-	public String saveAllProduct(@RequestBody List<Product> productl) {
-		if(productl.get(0)!=null) {
-			this.prodRepo.saveAll(productl);
+	public String saveAllProduct(@RequestBody List<Product> productL) {
+		if(productL.get(0)!=null) {
+			for(Product p:productL) {
+				//SAVING AUTHOR IF ALREADY EXIST
+				 p.setAuthors(p.getAuthors().stream().map(
+						 (pro)->{
+							 if(pro.getAuth_id()!=null && pro.getAuth_id()>0)
+								 pro=authRepo.getById(pro.getAuth_id());
+							 return pro;
+						 	}
+						 ).collect(Collectors.toList()) );
+			}
+			this.prodRepo.saveAll(productL);
 			return "PRODUCTs SAVED SUCCESSFULLY";
 		}
 		
@@ -88,47 +131,7 @@ public class ProductController {
 		return "FAILED..!! PLEASE TRY AGAIN";
 	}
 	
-	@GetMapping("/save-demo")
-	public Product getDemoProduct(){
-		
-		Product p = new Product();
-		Publisher pu = new Publisher(); 
-		List<Author> aus = new ArrayList<Author>();
-		Category c1=new Category();	c1.setCategory("E-BOOK");
-		Language l =new Language();	l.setLanguage("ENGLISH");
-		Genre g = new Genre();	g.setGenre("Fictional");
-		
-		Author a1=new Author(),a2=new Author(),a3=new Author();
-		
-		a1.setName("Auth1");a2.setName("Auth2");a3.setName("Auth3");
-		aus.add(a1);
-		aus.add(a2);
-		aus.add(a3);
-		
-		pu.setName("publisher");
-		//pu.setProuct(new ArrayList<Product>());
-		pu.setEmail("publisher@gmail.com");
-		pu.setMobile("8877665554");
-		
-		p.setCategory(c1);
-		p.setLanguage(l);
-		p.setGenre(g);
-		p.setAuthors(aus);
-		p.setTitle("DEMO TITLE");
-		p.setPublisher(pu);
-		p.setBase_price(1099.00);
-		p.setSale_price(1000.00);
-		p.setOffer_price(999.00);
-		p.setAlv_date(new Date(2021));
-		p.setShort_desc("SHORT DESCRIPTION");
-		p.setLong_desc("LONG DESCRIPTION WILL GO HERE");
-		p.setFront_image_link("image link");
-		p.setProduct_link("Product link");
-		
-		Product pp = this.prodRepo.save(p);
-		
-		return pp;
-	}
+	
 	
 	
 	
