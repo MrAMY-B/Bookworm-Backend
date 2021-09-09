@@ -34,18 +34,18 @@ public class Author {
 	private String email;
 	private String mobile;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "add_id")
 	private Address address;
 	
 	private Boolean has_beneficiary;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ban_id")
 	@JsonIgnore
 	private Beneficiary beneficiary;
 	
-	@OneToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "acc_id")
 	@JsonIgnore
 	private Account account;
