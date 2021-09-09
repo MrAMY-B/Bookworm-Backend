@@ -63,10 +63,14 @@ public class ProductController {
 	public Optional<Product> getProductById(@PathVariable("id")Integer id) {
 		return this.prodRepo.findById(id);
 	}
+//	@PostMapping("/")
+//	public Product saveProduct(@RequestBody Product product) {
+//		return this.prodRepo.save(product);
+//	}
 	
 	
 	@PostMapping("/")
-	public String saveProduct(@RequestBody Product product) {
+	public Product saveProduct(@RequestBody Product product) {
 		if(product.getAuthors()!=null) {
 			System.out.println("1");
 			
@@ -83,42 +87,37 @@ public class ProductController {
 			
 			
 			System.out.println("2");
-			this.prodRepo.save(product);
+			;
 			System.out.println("3");
-			return "PRODUCT SAVED SUCCESSFULLY";
+			return this.prodRepo.save(product);
 		}
 		
-		return "FAILED..!! PLEASE TRY AGAIN";
+		return this.prodRepo.save(product);
 	}
 	
-	@PostMapping("/all")
-	public String saveAllProduct(@RequestBody List<Product> productL) {
-		if(productL.get(0)!=null) {
-			for(Product p:productL) {
-				//SAVING AUTHOR IF ALREADY EXIST
-				 p.setAuthors(p.getAuthors().stream().map(
-						 (pro)->{
-							 if(pro.getAuth_id()!=null && pro.getAuth_id()>0)
-								 pro=authRepo.getById(pro.getAuth_id());
-							 return pro;
-						 	}
-						 ).collect(Collectors.toList()) );
-			}
-			this.prodRepo.saveAll(productL);
-			return "PRODUCTs SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
+//	@PostMapping("/all")
+//	public String saveAllProduct(@RequestBody List<Product> productL) {
+//		if(productL.get(0)!=null) {
+//			for(Product p:productL) {
+//				//SAVING AUTHOR IF ALREADY EXIST
+//				 p.setAuthors(p.getAuthors().stream().map(
+//						 (pro)->{
+//							 if(pro.getAuth_id()!=null && pro.getAuth_id()>0)
+//								 pro=authRepo.getById(pro.getAuth_id());
+//							 return pro;
+//						 	}
+//						 ).collect(Collectors.toList()) );
+//			}
+//			this.prodRepo.saveAll(productL);
+//			return "PRODUCTs SAVED SUCCESSFULLY";
+//		}
+//		
+//		return "FAILED..!! PLEASE TRY AGAIN";
+//	}
 	
 	@PutMapping("/")
-	public String updateProduct(@RequestBody Product product) {
-		if(this.prodRepo.existsById(product.getProd_id())) {
-			this.prodRepo.save(product);
-			return "PRODUCT UPDATED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Product updateProduct(@RequestBody Product product) {
+		return this.prodRepo.save(product);
 	}
 	
 	@DeleteMapping("/{id}")

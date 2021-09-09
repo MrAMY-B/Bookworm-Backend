@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,25 +38,16 @@ public class Product {
 	
 	
 
-//	//IF YOU ARE UNCOMMENTING PLEASE ADD UNCOMENTED PART TO ITS CONTROLLER SAVE DEMO
-//	@ManyToOne
-//	@JoinColumn(name = "cate_id")
-//	private Category category;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "lang_id")
-//	private Language language;
-//	
+
 	@ManyToOne	
 	@JoinColumn(name = "gen_id")
 	private Genre genre;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL ,fetch = FetchType.LAZY )
+	@ManyToMany( cascade = CascadeType.ALL)
 	@JoinTable(name = "prod_auth", 
 		joinColumns = @JoinColumn(name="prod_id"), 
-		inverseJoinColumns = @JoinColumn(name="auth_id")
-				)
+		inverseJoinColumns = @JoinColumn(name="auth_id"))
 	private List<Author> authors=new ArrayList<>();
 
 	@ManyToOne(cascade = CascadeType.ALL)
