@@ -32,15 +32,15 @@ public class Publisher {
 	private String email;
 	private String mobile;
 	
-	@OneToMany(mappedBy = "publisher",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "publisher",cascade = CascadeType.ALL)
 	@JsonBackReference
 	private List<Product> prouct;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "add_id")
 	private Address address;
 	
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "acc_id")
 	@JsonIgnore
 	private Account account;
