@@ -11,7 +11,7 @@ import com.amol.Entity.Author;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
 	
-	@Query("SELECET a.account FROM Account a WHERE a.auth_id=?1")
-	public Account getAccountByProdId(Integer auth_id);
+	@Query("SELECT a.account FROM Author a WHERE a.auth_id=?1")
+	public Account getAccountByAuthId(Integer auth_id);
 	
 }

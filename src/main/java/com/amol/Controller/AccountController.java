@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amol.Entity.Account;
 import com.amol.Repository.AccountRepostory;
+import com.amol.Repository.AuthorRepository;
+import com.amol.Repository.PublisherRepository;
 
 @RestController
 //@CrossOrigin(origins ="http://localhost:3000", allowedHeaders = "*")
@@ -26,6 +28,23 @@ public class AccountController {
 	
 	@Autowired
 	AccountRepostory accRepo;
+	
+	@Autowired
+	AuthorRepository authRepo;
+	
+	@Autowired
+	PublisherRepository pubRepo;
+	
+	
+	@GetMapping("/pub/{pub_id}")
+	public Account getAccountByPublisher(@PathVariable("pub_id") Integer pub_id) {
+		return this.pubRepo.getAccountByPubId(pub_id);
+	}
+	
+	@GetMapping("/auth/{pub_id}")
+	public Account getAccountByAuthorId(@PathVariable("auth_id") Integer auth_id) {
+		return this.authRepo.getAccountByAuthId(auth_id);
+	}
 	
 	@GetMapping("/all")
 	public List<Account> getAllAccount(){

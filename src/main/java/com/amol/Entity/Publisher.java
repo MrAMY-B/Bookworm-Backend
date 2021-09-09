@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,7 +43,7 @@ public class Publisher {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "acc_id")
-	@JsonIgnore
+	@JsonIgnoreProperties
 	private Account account;
 	
 }

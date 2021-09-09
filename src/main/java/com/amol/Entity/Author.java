@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,12 +43,15 @@ public class Author {
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ban_id")
-	@JsonIgnore
+	@JsonIgnoreProperties
 	private Beneficiary beneficiary;
 	
+	
+	
+	///-------------------IF @JsonBackRefernce then will be error
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "acc_id")
-	@JsonIgnore
+	@JsonIgnoreProperties
 	private Account account;
 	
 	

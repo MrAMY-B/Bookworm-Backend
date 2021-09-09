@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.amol.Entity.Account;
 import com.amol.Entity.Product;
 
 @Repository
@@ -25,4 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	@Query("SELECT p FROM Product p WHERE p.genre.language.category.cate_id = ?1")
 	List<Product> findAllByCategoryId(Integer id);
+	
+	
+	
 }

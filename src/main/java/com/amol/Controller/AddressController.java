@@ -26,6 +26,9 @@ public class AddressController {
 	@Autowired
 	AddressRepository addRepo;
 	
+
+	
+	
 	@GetMapping("/all")
 	public List<Address> getAllAddress(){
 		return this.addRepo.findAll();
