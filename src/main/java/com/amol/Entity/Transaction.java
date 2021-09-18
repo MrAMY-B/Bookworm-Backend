@@ -31,12 +31,16 @@ public class Transaction {
 	@GeneratedValue( strategy = GenerationType.AUTO)
 	private Integer tr_id;
 	
-	@ManyToMany(fetch = FetchType.EAGER )
-	@JoinTable(name = "tansactions_products",
-			joinColumns = @JoinColumn(name="tr_id"),
-			inverseJoinColumns = @JoinColumn(name="prod_id")
-			)
-	private List<Product> products=new ArrayList<>();
+//	@ManyToMany(fetch = FetchType.EAGER )
+//	@JoinTable(name = "tansactions_products",
+//			joinColumns = @JoinColumn(name="tr_id"),
+//			inverseJoinColumns = @JoinColumn(name="prod_id")
+//			)
+//	private List<Product> products=new ArrayList<>();
+	
+	@ManyToOne
+	@JoinColumn(name = "prod_id")
+	private Product product;
 	
 	@ManyToOne
 	@JoinColumn(name = "u_id")

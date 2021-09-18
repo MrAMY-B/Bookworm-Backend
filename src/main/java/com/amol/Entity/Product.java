@@ -73,9 +73,9 @@ public class Product {
 	
 	
 	
-	@ManyToMany(mappedBy = "products")
-	@JsonBackReference
-	private List<Transaction> transactions;
+//	@ManyToMany(mappedBy = "products")
+//	@JsonBackReference
+//	private List<Transaction> transactions;
 
 
 }

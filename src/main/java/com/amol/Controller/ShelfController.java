@@ -78,27 +78,33 @@ public class ShelfController {
 	}
 	
 	@PostMapping("/")
-	public String saveShelf(@RequestBody Shelf shelf) {
-		if(shelf!=null) {
-			System.out.println("\n\n =========================================================="+shelf+" \n\n");
-			
-			if(shelf.getUser()!=null && userRepo.existsById(shelf.getUser().getU_id()))
-				shelf.setUser(userRepo.getById(shelf.getUser().getU_id()));
-			
-			shelf.getProducts()
-				.forEach( (prod) -> {
-					if(prod!=null && prodRepo.existsById(prod.getProd_id()))
-							prod=prodRepo.getById(prod.getProd_id());
-				});
-			
-				
-			
-			this.shelfRepo.save(shelf);
-			return "SHELF SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Shelf saveShelfRecord(@RequestBody Shelf shelf) {
+		return this.shelfRepo.save(shelf);
 	}
+	
+//==============MODIFIED - 18Sept-2021
+//	@PostMapping("/")
+//	public String saveShelf(@RequestBody Shelf shelf) {
+//		if(shelf!=null) {
+//			System.out.println("\n\n =========================================================="+shelf+" \n\n");
+//			
+//			if(shelf.getUser()!=null && userRepo.existsById(shelf.getUser().getU_id()))
+//				shelf.setUser(userRepo.getById(shelf.getUser().getU_id()));
+//			
+//			shelf.getProducts()
+//				.forEach( (prod) -> {
+//					if(prod!=null && prodRepo.existsById(prod.getProd_id()))
+//							prod=prodRepo.getById(prod.getProd_id());
+//				});
+//			
+//				
+//			
+//			this.shelfRepo.save(shelf);
+//			return "SHELF SAVED SUCCESSFULLY";
+//		}
+//		
+//		return "FAILED..!! PLEASE TRY AGAIN";
+//	}
 	
 	
 //	@PostMapping("/shelf")

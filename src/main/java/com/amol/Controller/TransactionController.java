@@ -1,6 +1,5 @@
 package com.amol.Controller;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.amol.Entity.Shelf;
 import com.amol.Entity.Transaction;
 import com.amol.Repository.ShelfRepository;
 import com.amol.Repository.TransactionRepository;
@@ -50,39 +48,44 @@ public class TransactionController {
 		System.out.println("\n\n==== ID : "+id);
 		return Optional.ofNullable(this.transRepo.getAllTransactionsByUserId(id));
 		
-	}
+	}		
 //	@GetMapping("/trans/product/{id}")
 //	public List<Transaction> getTransactionByProductId(@PathVariable("id")Integer id) {
 //		System.out.println("\n\n"+this.transRepo.findTransactionByProductId(id));
 //		return this.transRepo.findTransactionByProductId(id);
 //	}
 	
-	
 	@PostMapping("/")
-	public String saveTransaction(@RequestBody Transaction trans) {
-		if(trans!=null) {
-			trans.setDate(new Date());
-			Transaction  t = this.transRepo.save(trans);
-			
-			if(t!=null && t.getTr_id()>0 ) {
-				Shelf shelf = new Shelf();
-				
-				t.getProducts()
-					.forEach( prod ->{
-						shelf.getProducts().add(prod);
-					});
-				
-				shelf.setUser(t.getUser());
-				shelf.setTr_type(t.getTr_type());
-				shelf.setProd_expiry(new java.sql.Date(System.currentTimeMillis()));
-				
-				Shelf ss = this.shelfRepo.save(shelf);
-				System.out.println("\n\n ========================\n"+ss+" \n\n");
-			}
-			return "TRANSACTION SAVED SUCCESSFULLY";
-		}
-		return "FAILED..!! PLEASE TRY AGAIN";
+	public Transaction saveOneTransaction(@RequestBody Transaction tran) {
+		return this.transRepo.save(tran);
 	}
+	
+	//==============MODIFIED - 18Sept-2021
+//	@PostMapping("/")
+//	public String saveTransaction(@RequestBody Transaction trans) {
+//		if(trans!=null) {
+//			trans.setDate(new Date());
+//			Transaction  t = this.transRepo.save(trans);
+//			
+//			if(t!=null && t.getTr_id()>0 ) {
+//				Shelf shelf = new Shelf();
+//				
+//				t.getProducts()
+//					.forEach( prod ->{
+//						shelf.getProducts().add(prod);
+//					});
+//				
+//				shelf.setUser(t.getUser());
+//				shelf.setTr_type(t.getTr_type());
+//				shelf.setProd_expiry(new java.sql.Date(System.currentTimeMillis()));
+//				
+//				Shelf ss = this.shelfRepo.save(shelf);
+//				System.out.println("\n\n ========================\n"+ss+" \n\n");
+//			}
+//			return "TRANSACTION SAVED SUCCESSFULLY";
+//		}
+//		return "FAILED..!! PLEASE TRY AGAIN";
+//	}
 	
 	@PostMapping("/all")
 	public String saveAllTransaction(@RequestBody List<Transaction> trans) {

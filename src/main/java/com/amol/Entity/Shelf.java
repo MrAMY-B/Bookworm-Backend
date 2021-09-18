@@ -28,13 +28,18 @@ public class Shelf {
 	private Integer s_id;
 	
 	@ManyToOne
+	@JoinColumn(name = "u_id")
 	private User user;
 	
-	@ManyToMany
-	@JoinTable(name = "shelf_products",
-				joinColumns = @JoinColumn(name="s_id"),
-				inverseJoinColumns = @JoinColumn(name="prod_id"))
-	private List<Product> products=new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name = "prod_id")
+	private Product product;
+	
+//	@ManyToMany
+//	@JoinTable(name = "shelf_products",
+//				joinColumns = @JoinColumn(name="s_id"),
+//				inverseJoinColumns = @JoinColumn(name="prod_id"))
+//	private List<Product> products=new ArrayList<>();
 	
 //	@OneToMany
 //	private List<Product> products;
