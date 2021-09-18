@@ -27,9 +27,11 @@ public class Shelf {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer s_id;
 	
-	@ManyToOne
-	@JoinColumn(name = "u_id")
-	private User user;
+//	@ManyToOne
+//	@JoinColumn(name = "u_id")
+//	private User user;
+	@ManyToOne(targetEntity = User.class)
+	private Integer u_id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id")
