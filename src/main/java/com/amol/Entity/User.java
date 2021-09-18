@@ -34,7 +34,7 @@ public class User {
 	
 	private String email;
 	private String mobile;
-	@JsonIgnoreProperties(allowGetters = true)
+	@JsonIgnore(value = true)
 	private String pass;
 	private Integer points;
 	private Integer can_lent_product;
