@@ -36,11 +36,57 @@ public class ShelfController {
 	
 	
 	@GetMapping("/user/{id}")
-	public Optional<List<Shelf>> getAllUsersByUserId(@PathVariable("id")Integer id){
+	public List<Shelf> getAllUsersByUserId(@PathVariable("id")Integer id){
 		System.out.println("\n\n in /shelf/user/{id}");
 		System.out.println(this.shelfRepo.getAllShelfsByUserId(id));
 		
-		return Optional.ofNullable(this.shelfRepo.getAllShelfsByUserId(id));
+		return this.shelfRepo.getAllShelfsByUserId(id);
+	}
+	
+	@GetMapping("/all")
+	public List<Shelf> getAllShelf(){
+		return this.shelfRepo.findAll();
+	}
+	
+	@GetMapping("/{id}")
+	public Optional<Shelf> getShelfById(@PathVariable("id")Integer id) {
+		System.out.println("\n\n"+this.shelfRepo.findById(id));
+		return this.shelfRepo.findById(id);
+	}
+	
+	@PostMapping("/")
+	public Shelf saveShelfRecord(@RequestBody Shelf shelf) {
+		return this.shelfRepo.save(shelf);
+	}
+	
+	@PostMapping("/all")
+	public String saveAllShelf(@RequestBody List<Shelf> shelf) {
+		if(shelf.get(0)!=null) {
+			this.shelfRepo.saveAll(shelf);
+			return "SHELFs SAVED SUCCESSFULLY";
+		}
+		
+		return "FAILED..!! PLEASE TRY AGAIN";
+	}
+	
+	@PutMapping("/")
+	public String updateShelf(@RequestBody Shelf shelf) {
+		if(this.shelfRepo.existsById(shelf.getS_id())) {
+			this.shelfRepo.save(shelf);
+			return "SHELF UPDATED SUCCESSFULLY";
+		}
+		
+		return "FAILED..!! PLEASE TRY AGAIN";
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteShelf(@PathVariable("id")Integer id) {
+		if(this.shelfRepo.existsById(id)) {
+			this.shelfRepo.deleteById(id);
+			return "SHELF DELETED SUCCESSFULLY";
+		}
+		
+		return "FAILED..!! PLEASE TRY AGAIN";
 	}
 	
 //	@GetMapping("/shelf/product/{id}")
@@ -66,21 +112,7 @@ public class ShelfController {
 //			return Optional.ofNullable(shelfs2);
 //		}
 	
-	@GetMapping("/all")
-	public List<Shelf> getAllShelf(){
-		return this.shelfRepo.findAll();
-	}
-	
-	@GetMapping("/{id}")
-	public Optional<Shelf> getShelfById(@PathVariable("id")Integer id) {
-		System.out.println("\n\n"+this.shelfRepo.findById(id));
-		return this.shelfRepo.findById(id);
-	}
-	
-	@PostMapping("/")
-	public Shelf saveShelfRecord(@RequestBody Shelf shelf) {
-		return this.shelfRepo.save(shelf);
-	}
+
 	
 //==============MODIFIED - 18Sept-2021
 //	@PostMapping("/")
@@ -150,35 +182,7 @@ public class ShelfController {
 	}
 	 */
 	
-	@PostMapping("/all")
-	public String saveAllShelf(@RequestBody List<Shelf> shelf) {
-		if(shelf.get(0)!=null) {
-			this.shelfRepo.saveAll(shelf);
-			return "SHELFs SAVED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
 	
-	@PutMapping("/")
-	public String updateShelf(@RequestBody Shelf shelf) {
-		if(this.shelfRepo.existsById(shelf.getS_id())) {
-			this.shelfRepo.save(shelf);
-			return "SHELF UPDATED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
-	
-	@DeleteMapping("/{id}")
-	public String deleteShelf(@PathVariable("id")Integer id) {
-		if(this.shelfRepo.existsById(id)) {
-			this.shelfRepo.deleteById(id);
-			return "SHELF DELETED SUCCESSFULLY";
-		}
-		
-		return "FAILED..!! PLEASE TRY AGAIN";
-	}
 	
 	
 	
