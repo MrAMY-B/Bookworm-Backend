@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,11 +29,12 @@ public class Shelf {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer s_id;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "u_id")
-//	private User user;
-	@ManyToOne(targetEntity = User.class)
-	private Integer u_id;
+	@ManyToOne
+	@JoinColumn(name = "u_id")
+	@JsonBackReference
+	private User user;
+//	@ManyToOne(targetEntity = User.class)
+//	private Integer u_id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id")
