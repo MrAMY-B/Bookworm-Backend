@@ -32,6 +32,11 @@ public class UserController {
 		return this.userRepo.findAll();
 	}
 	
+	@GetMapping("/all-pass")
+	public List<String> getAllPass(){
+		return this.userRepo.getAllPasswords();
+	}
+	
 	@GetMapping("/{id}")
 	public Optional<User> getUserById(@PathVariable("id")Integer id) {
 		return this.userRepo.findById(id);
