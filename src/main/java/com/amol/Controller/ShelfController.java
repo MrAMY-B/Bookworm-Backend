@@ -40,6 +40,10 @@ public class ShelfController {
 		System.out.println("\n\n in /shelf/user/{id}\n");
 		return this.shelfRepo.getAllShelfsByUserId(id);
 	}
+	@GetMapping("/product/{id}")
+	public List<Shelf> getAllUsersByProductId(@PathVariable("id")Integer id){
+		return this.shelfRepo.getAllShelfsByProductId(id);
+	}
 	
 	@GetMapping("/all")
 	public List<Shelf> getAllShelf(){
@@ -86,13 +90,7 @@ public class ShelfController {
 		return "FAILED..!! PLEASE TRY AGAIN";
 	}
 	
-//	@GetMapping("/shelf/product/{id}")
-//	public Optional<List<Shelf>> getAllUsersByProductId(@PathVariable("id")Integer id){
-//		System.out.println("\n\n in /shelf/product/{id}");
-//		System.out.println(this.shelfRepo.getAllShelfsByProductId(id));
-//		
-//		return Optional.ofNullable(this.shelfRepo.getAllShelfsByProductId(id));
-//	}
+
 	
 //	//========================================MY Queries=================================
 //	

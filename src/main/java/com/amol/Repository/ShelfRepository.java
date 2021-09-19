@@ -14,7 +14,7 @@ public interface ShelfRepository extends JpaRepository<Shelf, Integer> {
 	@Query("SELECT s FROM Shelf s WHERE s.user.u_id=?1")
 	public List<Shelf> getAllShelfsByUserId(Integer id);
 	
-//	@Query("SELECT s FROM Shelf s WHERE s.product.p_id = ?1")
-//	List<Shelf> getAllShelfsByProductId(Integer id);
+	@Query("SELECT s FROM Shelf s WHERE s.product.prod_id = ?1")
+	List<Shelf> getAllShelfsByProductId(Integer id);
 
 }

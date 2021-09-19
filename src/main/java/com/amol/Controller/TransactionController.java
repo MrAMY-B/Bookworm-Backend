@@ -40,20 +40,19 @@ public class TransactionController {
 	@GetMapping("/{id}")
 	public Optional<Transaction> getTransactionById(@PathVariable("id")Integer id) {
 		System.out.println("\n\n==== ID : "+id);
-		return Optional.ofNullable(this.transRepo.getById(id));
+		return this.transRepo.findById(id);
 	}
 	
 	@GetMapping("/user/{id}")
-	public Optional<List<Transaction>>  getTransactionByUserId(@PathVariable("id")Integer id) {
-		System.out.println("\n\n==== ID : "+id);
-		return Optional.ofNullable(this.transRepo.getAllTransactionsByUserId(id));
+	public List<Transaction>  getTransactionByUserId(@PathVariable("id")Integer id) {
+		return this.transRepo.getAllTransactionsByUserId(id);
 		
 	}		
-//	@GetMapping("/trans/product/{id}")
-//	public List<Transaction> getTransactionByProductId(@PathVariable("id")Integer id) {
-//		System.out.println("\n\n"+this.transRepo.findTransactionByProductId(id));
-//		return this.transRepo.findTransactionByProductId(id);
-//	}
+
+	@GetMapping("/product/{id}")
+	public List<Transaction> getTransactionByProductId(@PathVariable("id")Integer id) {
+		return this.transRepo.findTransactionByProductId(id);
+	}
 	
 	@PostMapping("/")
 	public Transaction saveOneTransaction(@RequestBody Transaction tran) {
