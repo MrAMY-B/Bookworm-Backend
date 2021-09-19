@@ -33,7 +33,6 @@ public class Shelf {
 	
 	@ManyToOne
 	@JoinColumn(name = "u_id")
-	@JsonBackReference
 	private User user;
 	
 	@ManyToOne
