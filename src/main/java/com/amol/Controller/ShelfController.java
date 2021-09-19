@@ -36,10 +36,8 @@ public class ShelfController {
 	
 	
 	@GetMapping("/user/{id}")
-	public Optional<List<Shelf>> getAllUsersByUserId(@PathVariable("id")Integer id){
-		System.out.println("\n\n in /shelf/user/{id}");
-		System.out.println(this.shelfRepo.getAllShelfsByUserId(id));
-		
+	public List<Shelf> getAllUsersByUserId(@PathVariable("id")Integer id){
+		System.out.println("\n\n in /shelf/user/{id}\n");
 		return this.shelfRepo.getAllShelfsByUserId(id);
 	}
 	
@@ -50,7 +48,6 @@ public class ShelfController {
 	
 	@GetMapping("/{id}")
 	public Optional<Shelf> getShelfById(@PathVariable("id")Integer id) {
-		System.out.println("\n\n"+this.shelfRepo.findById(id));
 		return this.shelfRepo.findById(id);
 	}
 	

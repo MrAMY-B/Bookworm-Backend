@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -35,6 +36,7 @@ public class User {
 	private String email;
 	private String mobile;
 	
+	@JsonBackReference
 	private String pass;
 	private Integer points;
 	private Integer can_lent_product;

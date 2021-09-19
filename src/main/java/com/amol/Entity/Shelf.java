@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,8 +35,6 @@ public class Shelf {
 	@JoinColumn(name = "u_id")
 	@JsonBackReference
 	private User user;
-//	@ManyToOne(targetEntity = User.class)
-//	private Integer u_id;
 	
 	@ManyToOne
 	@JoinColumn(name = "prod_id")
