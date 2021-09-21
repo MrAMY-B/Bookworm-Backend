@@ -47,7 +47,7 @@ public class Transaction {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
-	private Float amt;
+	private Double amt;
 	
 	
 	private String status;
