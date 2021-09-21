@@ -1,6 +1,7 @@
 package com.amol.Controller;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,7 +66,7 @@ public class TransactionController {
 	@PostMapping("/purchase/")
 	public String buyProductTransaction(@RequestBody Transaction trans) {
 		if(trans!=null) {
-			trans.setDate(new Date());
+			trans.setDate(new Date(System.currentTimeMillis()));
 			trans.setStatus("SUCCESSFULL");
 			Transaction  t = this.transRepo.save(trans);
 			
@@ -76,9 +77,9 @@ public class TransactionController {
 				
 				shelf.setUser(t.getUser());
 				shelf.setTr_type(t.getTr_type());
-				
+				 
 				//++++++++++Please Change By Default 1 year
-				shelf.setProd_expiry(new java.sql.Date(System.currentTimeMillis()+(3600000*24*365)));
+				shelf.setProd_expiry(new Date(System.currentTimeMillis()+(3600000*24*365)));
 				
 				Shelf ss = this.shelfRepo.save(shelf);
 				if(ss!=null)
@@ -92,7 +93,7 @@ public class TransactionController {
 	@PostMapping("/rent/")
 	public String rentProductTransaction(@RequestBody Transaction trans) {
 		if(trans!=null) {
-			trans.setDate(new Date());
+			trans.setDate(new Date(System.currentTimeMillis()));
 			trans.setStatus("SUCCESSFULL");
 			Transaction  t = this.transRepo.save(trans);
 			
@@ -105,7 +106,7 @@ public class TransactionController {
 				shelf.setTr_type(t.getTr_type());
 				
 				//++++++++++Please Change By Default 10 days
-				shelf.setProd_expiry(new java.sql.Date(System.currentTimeMillis()+(3600000*24*30)));
+				shelf.setProd_expiry(new Date(System.currentTimeMillis()+(3600000*24*30)));
 				
 				Shelf ss = this.shelfRepo.save(shelf);
 				if(ss!=null)
@@ -123,7 +124,7 @@ public class TransactionController {
 				shelf.setTr_type("LENTED");
 				
 				//++++++++++Please Change By Default 1 month
-				shelf.setProd_expiry(new java.sql.Date(System.currentTimeMillis()+(3600000*24*30)));
+				shelf.setProd_expiry(new Date(System.currentTimeMillis()+(3600000*24*30)));
 				
 				Shelf ss = this.shelfRepo.save(shelf);
 				if(ss!=null)
