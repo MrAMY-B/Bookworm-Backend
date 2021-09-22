@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import com.amol.Entity.ProductFiles;
 import com.amol.Repository.ProductRepository;
 
 @RestController
+@CrossOrigin(origins = "*",allowedHeaders = "*")
 public class UploadFileController {
 
 
@@ -27,19 +30,20 @@ public class UploadFileController {
 	ProductRepository prodRepo;
 	
 	
-	@PostMapping("/update-img-file")
+	@PostMapping("/update-file-paths/{id}")
 	public void updateProductImageAndProductFile(@RequestParam("image")String image,
 												@RequestParam("file") String file,
-												@RequestParam("prod_id")Integer prod_id) {
+												@PathVariable("id")Integer prod_id) {
 		this.prodRepo.updateProductImageAndProductFile(image, file, prod_id);
 	};
 	
 	
-	@PostMapping(value = "/upload-files")
-	public List<String> uploadFiles(@RequestParam("prod_id")Integer prod_id,
+	@PostMapping(value = "/upload-files/{id}")
+	public List<String> uploadFiles(@RequestParam("file") MultipartFile file,
 									@RequestParam("image") MultipartFile image,
-									@RequestParam("file") MultipartFile file
+									@PathVariable("id")Integer prod_id
 			) throws IOException{
+		
 		
 		
 		List<String> filesPath = new ArrayList<String>();
