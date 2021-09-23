@@ -34,6 +34,7 @@ public class AuthorController {
 	public String saveBeneficiaryToAuthor(@PathVariable("id")Integer auth_id,@RequestBody Beneficiary bene) {
 
 		Author author = authPubRepo.getById(auth_id);
+		author.setHas_beneficiary(true);
 		author.setBeneficiary(bene);
 		this.authPubRepo.save(author);
 		
