@@ -32,7 +32,7 @@ public class AuthenticationController {
 
 	@PostMapping("/admin")
 	public ResponseEntity<String> authenticateAdmin(@RequestBody User user) {
-		if(user.getEmail().equalsIgnoreCase("amol@gmail.com") && user.getPass().equalsIgnoreCase("amol"))
+		if(user.getEmail().equalsIgnoreCase("amol@gmail.com") && user.getPass().equalsIgnoreCase("amolbh"))
 			return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
 		return new ResponseEntity<String>("INVALID CREDENTIAL",HttpStatus.UNAUTHORIZED);
 	}
