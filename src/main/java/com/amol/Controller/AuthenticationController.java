@@ -1,6 +1,8 @@
 package com.amol.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,14 +21,19 @@ public class AuthenticationController {
 	UserRepository userRepo;
 	
 	@PostMapping("/user")
-	public User authenticateUser(@RequestBody User user) {
-		return this.userRepo.authenticateUser(user.getEmail(),user.getPass());
+	public ResponseEntity<?> authenticateUser(@RequestBody User user) {
+		User  u = this.userRepo.authenticateUser(user.getEmail(),user.getPass());
+		
+		if(u!=null)
+			return new ResponseEntity<User>(u,HttpStatus.OK);
+
+		return new ResponseEntity<>("INVALID CREDENTIAL",HttpStatus.UNAUTHORIZED);
 	}
 
 	@PostMapping("/admin")
-	public String authenticateAdmin(@RequestBody User user) {
+	public ResponseEntity<String> authenticateAdmin(@RequestBody User user) {
 		if(user.getEmail().equalsIgnoreCase("amol@gmail.com") && user.getPass().equalsIgnoreCase("amol"))
-			return "SUCCESS";
-		return "FAILED";
+			return new ResponseEntity<String>("SUCCESS",HttpStatus.OK);
+		return new ResponseEntity<String>("INVALID CREDENTIAL",HttpStatus.UNAUTHORIZED);
 	}
 }
