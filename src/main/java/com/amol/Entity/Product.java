@@ -50,7 +50,7 @@ public class Product {
 		inverseJoinColumns = @JoinColumn(name="auth_id"))
 	private List<Author> authors=new ArrayList<>();
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "pub_id")
 	private Publisher publisher;
 	

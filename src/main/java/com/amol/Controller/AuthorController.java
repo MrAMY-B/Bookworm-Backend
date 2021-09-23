@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.amol.Entity.Author;
+import com.amol.Entity.Beneficiary;
 import com.amol.Repository.AuthorRepository;
 
 @RestController
@@ -29,6 +30,15 @@ public class AuthorController {
 	
 	
 	
+	@PostMapping("/add-beneficiary/{id}")
+	public String saveBeneficiaryToAuthor(@PathVariable("id")Integer auth_id,@RequestBody Beneficiary bene) {
+
+		Author author = authPubRepo.getById(auth_id);
+		author.setBeneficiary(bene);
+		this.authPubRepo.save(author);
+		
+		return "Success";
+	}
 	
 	@GetMapping("/all")
 	public List<Author> getAllAuthor(){

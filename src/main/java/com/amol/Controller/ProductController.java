@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.amol.Entity.Product;
 import com.amol.Repository.AuthorRepository;
 import com.amol.Repository.ProductRepository;
+import com.amol.Repository.PublisherRepository;
 
 @RestController
 //@CrossOrigin(origins ="http://localhost:4200", allowedHeaders = "*")
@@ -29,6 +30,9 @@ public class ProductController {
 	AuthorRepository authRepo;
 	@Autowired
 	ProductRepository prodRepo;
+	@Autowired
+	PublisherRepository pubRepo;
+	
 	
 	
 	@GetMapping("/all")
@@ -71,9 +75,13 @@ public class ProductController {
 	
 	@PostMapping("/")
 	public Product saveProduct(@RequestBody Product product) {
+		
+		
+		if(product.getPublisher().getPub_id()==null) 
+			product.setPublisher(this.pubRepo.save(product.getPublisher()));
+		
 		if(product.getAuthors()!=null) {
 			System.out.println("1");
-			
 			
 			 //SAVING AUTHOR IF ALREADY EXIST
 			 product.setAuthors(product.getAuthors().stream().map(
