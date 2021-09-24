@@ -49,6 +49,7 @@ public class Shelf {
 //	private List<Product> products;
 //	
 	
+	private Date s_date;
 	
 	private String tr_type;
 	

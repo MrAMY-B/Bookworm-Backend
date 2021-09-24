@@ -1,5 +1,6 @@
 package com.amol.Controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -76,7 +77,7 @@ public class ProductController {
 	@PostMapping("/")
 	public Product saveProduct(@RequestBody Product product) {
 		
-		
+		product.setAvl_date(new Date(System.currentTimeMillis()));
 		if(product.getPublisher().getPub_id()==null) 
 			product.setPublisher(this.pubRepo.save(product.getPublisher()));
 		

@@ -9,21 +9,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class LibraryPackage {
+public class Feedback {
+	
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer f_id;
+	private String name;
+	private String email;
+	private String query;
+	
 
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer pack_id;
-	private Integer duration;
-	private Integer amount;
-	private Integer no_prod;
+
 	
-	
-	
-	
+
 }

@@ -21,13 +21,16 @@ public class AuthenticationController {
 	UserRepository userRepo;
 	
 	@PostMapping("/user")
-	public ResponseEntity<?> authenticateUser(@RequestBody User user) {
+	public ResponseEntity<User> authenticateUser(@RequestBody User user) {
 		User  u = this.userRepo.authenticateUser(user.getEmail(),user.getPass());
 		
-		if(u!=null)
+		if(u!=null) {
+			System.out.println("I M HERE---------------->"+u);
 			return new ResponseEntity<User>(u,HttpStatus.OK);
-
-		return new ResponseEntity<>("INVALID CREDENTIAL",HttpStatus.UNAUTHORIZED);
+		}
+			
+		System.out.println("-------not logged in");
+		return new ResponseEntity<>(null,HttpStatus.UNAUTHORIZED);
 	}
 
 	@PostMapping("/admin")

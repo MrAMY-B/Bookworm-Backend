@@ -58,7 +58,7 @@ public class Product {
 	private Double sale_price;
 	private Double offer_price;
 	
-	private Date alv_date;
+	private Date avl_date;
 	
 	private String short_desc;
 	private String long_desc;

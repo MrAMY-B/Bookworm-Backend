@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.amol.Entity.Shelf;
 import com.amol.Entity.Transaction;
+import com.amol.Entity.User;
 import com.amol.Repository.ShelfRepository;
 import com.amol.Repository.TransactionRepository;
+import com.amol.Repository.UserRepository;
 
 @RestController
 //@CrossOrigin(origins ="http://localhost:4200", allowedHeaders = "*")
@@ -33,6 +35,9 @@ public class TransactionController {
 	
 	@Autowired
 	ShelfRepository shelfRepo;
+	
+	@Autowired
+	UserRepository userRepo;
 	
 	
 	@GetMapping("/all")
@@ -71,8 +76,10 @@ public class TransactionController {
 			Transaction  t = this.transRepo.save(trans);
 			
 			if(t!=null && t.getTr_id()>0 ) {
-				Shelf shelf = new Shelf();
 				
+				
+				Shelf shelf = new Shelf();
+				shelf.setS_date(new Date(System.currentTimeMillis()));
 				shelf.setProduct(t.getProduct());
 				
 				shelf.setUser(t.getUser());
@@ -82,6 +89,11 @@ public class TransactionController {
 				shelf.setProd_expiry(new Date(System.currentTimeMillis()+(3600000*24*365)));
 				
 				Shelf ss = this.shelfRepo.save(shelf);
+				
+				User u = t.getUser();
+				u.setPoints(u.getPoints()+5);
+				userRepo.save(u);
+				
 				if(ss!=null)
 					return "SUCCESSFULL";
 			}

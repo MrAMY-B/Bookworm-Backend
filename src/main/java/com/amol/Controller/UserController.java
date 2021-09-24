@@ -46,6 +46,7 @@ public class UserController {
 	@PostMapping("/")
 	public String saveUser(@RequestBody User user) {
 		if(user!=null) {
+			user.setCan_lent_product(0);
 			this.userRepo.save(user);
 			return "USER SAVED SUCCESSFULLY";
 		}

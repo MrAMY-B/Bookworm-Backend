@@ -1,5 +1,6 @@
 package com.amol.Controller;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,6 +58,7 @@ public class ShelfController {
 	
 	@PostMapping("/")
 	public Shelf saveShelfRecord(@RequestBody Shelf shelf) {
+		shelf.setS_date(new Date(System.currentTimeMillis()));
 		return this.shelfRepo.save(shelf);
 	}
 	

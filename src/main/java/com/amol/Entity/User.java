@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder.Default;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -39,6 +40,9 @@ public class User {
 	@JsonBackReference
 	private String pass;
 	private Integer points;
+	
+	
+	
 	private Integer can_lent_product;
 	private Date pack_expiry;
 	
